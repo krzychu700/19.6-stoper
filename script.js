@@ -51,10 +51,16 @@ class Stopwatch {
       this.times.seconds = 0;
     }
   }
-  resetHard() {
+
+  score() {
     addScore();
+    this.print();
+  }
+
+  resetHard() {
     this.reset();
     this.print();
+    cleanBoard();
     }
 }
 const stopwatch = new Stopwatch(
@@ -63,8 +69,11 @@ const stopwatch = new Stopwatch(
 let startButton = document.getElementById('start');
 startButton.addEventListener('click', () => stopwatch.start());
 
-let stopButton = document.getElementById('reset');
-stopButton.addEventListener('click', () => stopwatch.resetHard());
+let scoreButton = document.getElementById('scoreButton');
+scoreButton.addEventListener('click', () => stopwatch.score());
+
+let resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', () => stopwatch.resetHard());
 
 function pad0(value) {
   let result = value.toString();
@@ -75,10 +84,14 @@ function pad0(value) {
 }
 const addScore = () => {
   let score = document.getElementsByClassName("stopwatch");
-  let resultList = document.getElementsByClassName("results");
+  let resultList = document.getElementById("results");
   const scoreText = score[0].innerText;
   const scoreList = document.createElement('li');
   scoreList.className = 'score';
   scoreList.innerHTML = scoreText;
-  resultList[0].appendChild(scoreList); 
+  resultList.appendChild(scoreList); 
+ }
+
+ const cleanBoard = () => {
+   document.getElementById("results").innerHTML = "";
  }

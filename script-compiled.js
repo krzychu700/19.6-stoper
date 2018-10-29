@@ -71,11 +71,17 @@ var Stopwatch = function () {
       }
     }
   }, {
+    key: 'score',
+    value: function score() {
+      addScore();
+      this.print();
+    }
+  }, {
     key: 'resetHard',
     value: function resetHard() {
-      addScore();
       this.reset();
       this.print();
+      cleanBoard();
     }
   }]);
 
@@ -89,8 +95,13 @@ startButton.addEventListener('click', function () {
   return stopwatch.start();
 });
 
-var stopButton = document.getElementById('reset');
-stopButton.addEventListener('click', function () {
+var scoreButton = document.getElementById('scoreButton');
+scoreButton.addEventListener('click', function () {
+  return stopwatch.score();
+});
+
+var resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', function () {
   return stopwatch.resetHard();
 });
 
@@ -103,10 +114,14 @@ function pad0(value) {
 }
 var addScore = function addScore() {
   var score = document.getElementsByClassName("stopwatch");
-  var resultList = document.getElementsByClassName("results");
+  var resultList = document.getElementById("results");
   var scoreText = score[0].innerText;
   var scoreList = document.createElement('li');
   scoreList.className = 'score';
   scoreList.innerHTML = scoreText;
-  resultList[0].appendChild(scoreList);
+  resultList.appendChild(scoreList);
+};
+
+var cleanBoard = function cleanBoard() {
+  document.getElementById("results").innerHTML = "";
 };
